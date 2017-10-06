@@ -1,1 +1,1 @@
-# ocean-path-planner
+# slocum-glider-path-planner
