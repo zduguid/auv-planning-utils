@@ -12,7 +12,7 @@ The Slocum Glider is an autonomous underwater vehicle (AUV) that is specialized 
     - [Dependencies](#dependencies)
     - [Ocean Current Data](#ocean-current-data) 
 - [Max Range Planner](#max-range-planner)
-	- [To-Do](#to-do)
+    - [To-Do](#to-do)
 - [Acknowledgements](#acknowledgements)
 
 
@@ -27,12 +27,12 @@ To run this script, you will need to satisfy the following [Dependencies](#depen
 * ```numpy``` is used to create array objects for graphing [(numpy)](http://www.numpy.org)
 * ```Basemap``` works with ```matplotlib``` to create world map graphs [(Basemap)](https://matplotlib.org/basemap/)
 * ```PyProj``` is a necessary dependency for ```Basemap``` [(PyProj)](https://pypi.python.org/pypi/pyproj?)
-* ```warnings``` is used to handle ```GUI Implemented``` errors 
 
 
 ### Ocean Current Data
-* ```OPeNDAP``` format: [(OPeNDAP)](http://hfrnet.ucsd.edu/thredds/dodsC/HFR/USWC/2km/hourly/RTV/HFRADAR,_US_West_Coast,_2km_Resolution,_Hourly_RTV_best.ncd.html)
-* ```NCSS``` format: [(NCSS)](http://hfrnet.ucsd.edu/thredds/ncss/grid/HFR/USWC/2km/hourly/RTV/HFRADAR,_US_West_Coast,_2km_Resolution,_Hourly_RTV_best.ncd/dataset.html)
+* HF Radar Server via [CORDC THREDDS](http://hfrnet.ucsd.edu/thredds/catalog.html)
+* [OPeNDAP](http://hfrnet.ucsd.edu/thredds/dodsC/HFR/USWC/2km/hourly/RTV/HFRADAR,_US_West_Coast,_2km_Resolution,_Hourly_RTV_best.ncd.html) format (for Santa Barbara 2km)
+* [(NetcdfSubset)](http://hfrnet.ucsd.edu/thredds/ncss/grid/HFR/USWC/2km/hourly/RTV/HFRADAR,_US_West_Coast,_2km_Resolution,_Hourly_RTV_best.ncd/dataset.html) format (for Santa Barbara 2km)
 
 
 ## Max Range Planner

@@ -4,7 +4,7 @@
 # - Model uses MDP as a dynamic programming approach 
 #
 # Author: Zach Duguid
-# Last Updated: 10/20/2017
+# Last Updated: 10/31/2017
 
 
 import math
@@ -21,8 +21,28 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.patches import Polygon
 
 
+class Region(object):
+    def __init__(self, name, W_lim, S_lim, E_lim, N_lim):
+        ''' initialize region object that maintains relevant geographic parameters, in DublinCore format 
+        '''
+        self.name = name
+        self.W_lim = W_lim
+        self.S_lim = S_lim
+        self.E_lim = E_lim
+        self.N_lim = N_lim
+        self.fname = None
+        self.resolution = None
+
+
+    def set_fname(self, fname, resolution):
+        ''' initialize data file and resolution (km) parameters
+        '''
+        self.fname = fname
+        self.resolution = resolution
+
+
 class SlocumGlider(object):
-    def __init__(self):
+    def __init__(self, region):
         ''' initialize glider model object and define model parameters  
         '''
         # capacity parameters
@@ -33,7 +53,8 @@ class SlocumGlider(object):
         self.c1 = 0.5213                    # coefficient from graphical fit
         self.c2 = 0.3467                    # coefficient from graphical fit
 
-        # graphing parameters   
+        # graphing parameters
+        self.region = region   
         self.major_line_width = 3           # width of thick graph lines 
         self.minor_line_width = 1           # width of small graph lines
         self.inset_size = '20%'             # size of inset map
@@ -108,19 +129,19 @@ class SlocumGlider(object):
         # draw basemap
         fig = plt.figure(figsize=(12.5,6.5))
         ax = fig.add_subplot(111)
-        bmap = Basemap(projection='merc', llcrnrlon=self.llcrnrlon, llcrnrlat=self.llcrnrlat, urcrnrlon=self.urcrnrlon, urcrnrlat=self.urcrnrlat, resolution=self.resolution, ax=ax)
+        bmap = Basemap(projection='merc', llcrnrlon=self.region.W_lim, llcrnrlat=self.region.S_lim, urcrnrlon=self.region.E_lim, urcrnrlat=self.region.N_lim, resolution=self.resolution, ax=ax)
         bmap.fillcontinents(color=self.base_land, lake_color=self.base_water)
         bmap.drawcountries(linewidth=self.base_lines)
         bmap.drawstates(linewidth=self.base_lines)
         bmap.drawcoastlines(linewidth=self.base_lines)
         bmap.drawmapboundary(fill_color=self.base_water)
-        plt.title('Slocum Glider in Santa Barbara Basin, CA', **self.title_font)
+        plt.title('Slocum Glider in '+self.region.name+' ('+str(self.region.resolution)+'km resolution)', **self.title_font)
 
         # create axes for inset map
         axin = inset_axes(bmap.ax, width=self.inset_size, height=self.inset_size, loc=4)
 
         # draw inset map  
-        omap = Basemap(projection='ortho', lat_0=self.llcrnrlat, lon_0=self.llcrnrlon, ax=axin, anchor='NE')
+        omap = Basemap(projection='ortho', lat_0=self.region.S_lim, lon_0=self.region.E_lim, ax=axin, anchor='NE')
         omap.drawcountries(color=self.inset_land)
         omap.fillcontinents(color=self.inset_water)               
         bx, by = omap(bmap.boundarylons, bmap.boundarylats)
@@ -129,32 +150,27 @@ class SlocumGlider(object):
         omap.ax.add_patch(mapboundary)
 
         # draw ocean currents
-        bmap.quiver(glider.X, glider.Y, glider.U, glider.V, glider.C, cmap='viridis', scale=15, latlon=True)
+        bmap.quiver(self.X, self.Y, self.U, self.V, self.C, cmap='viridis', scale=15, latlon=True)
 
         # show the plot
         plt.show()
 
 
 if __name__ == '__main__':
-    # initialize Glider Model object 
-    glider = SlocumGlider()
+    # initialize Santa Barbara region 
+    SantaBarbara = Region('Santa Barbara Basin, CA', -120.95, 33.72, -118.66, 34.62)
+    SantaBarbara.set_fname('data/SB-6km-2017-10-01-T16-00-00Z.nc4', 6)
 
-    # coordinates of Santa Barbara Basin in DublinCore format
-    westlimit = -120.95
-    southlimit = 33.72
-    eastlimit = -118.66
-    northlimit = 34.62
+    # initialize Hawaii region
+    Hawaii = Region('Hawaiian Islands, HI', -158.64, 20.35, -155.60, 21.89)
+    Hawaii.set_fname('data/HI-6km-2017-11-01-T16-00-00Z.nc4', 1)
 
-    # coordinates in Mercator map format, plotting with Basemap
-    glider.llcrnrlon = westlimit
-    glider.llcrnrlat = southlimit
-    glider.urcrnrlon = eastlimit
-    glider.urcrnrlat = northlimit
+    # initialize Glider Model object
+    Glider = SlocumGlider(SantaBarbara)
 
-    # file name of ocean current data
-    fname = 'data/RTV_HFRADAR,_US_West_Coast,_2km_Resolution,_Hourly_RTV_best.nc4'
-    glider.get_ocean_data(fname)
+    # retrieve ocean current data
+    Glider.get_ocean_data(Glider.region.fname)
 
     # plot the map
-    glider.get_map()
+    Glider.get_map()
     
