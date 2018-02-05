@@ -30,9 +30,9 @@ To run this script, you will need to satisfy the following [Dependencies](#depen
 
 
 ### Ocean Current Data
-* HF Radar Server via [CORDC THREDDS](http://hfrnet.ucsd.edu/thredds/catalog.html)
+* HF Radar Network via [CORDC THREDDS](http://hfrnet.ucsd.edu/thredds/catalog.html)
 * [OPeNDAP](http://hfrnet.ucsd.edu/thredds/dodsC/HFR/USWC/2km/hourly/RTV/HFRADAR,_US_West_Coast,_2km_Resolution,_Hourly_RTV_best.ncd.html) format (for Santa Barbara 2km)
-* [(NetcdfSubset)](http://hfrnet.ucsd.edu/thredds/ncss/grid/HFR/USWC/2km/hourly/RTV/HFRADAR,_US_West_Coast,_2km_Resolution,_Hourly_RTV_best.ncd/dataset.html) format (for Santa Barbara 2km)
+* [NetcdfSubset](http://hfrnet.ucsd.edu/thredds/ncss/grid/HFR/USWC/2km/hourly/RTV/HFRADAR,_US_West_Coast,_2km_Resolution,_Hourly_RTV_best.ncd/dataset.html) format (for Santa Barbara 2km)
 
 
 ## Max Range Planner

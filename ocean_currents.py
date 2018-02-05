@@ -115,6 +115,12 @@ class SlocumGlider(object):
         with np.errstate(invalid='ignore'):
             self.U = np.nan_to_num(self.dataset['u'][0])
             self.V = np.nan_to_num(self.dataset['v'][0])
+
+        # assert that the arrays have the correct dimensions
+        if (len(self.U.shape) == 3) and (self.U.shape[0] == 1):
+            self.U = self.U[0]
+            self.V = self.V[0]
+
         self.C = (self.U**2 + self.V**2)**0.5;
         self.X = np.array([self.dataset.variables['lon'] for i in range(self.lat_len)])
         self.Y = np.array([[self.dataset['lat'][i] for j in range(self.lon_len)] for i in range(self.lat_len)])
@@ -161,12 +167,16 @@ if __name__ == '__main__':
     SantaBarbara = Region('Santa Barbara Basin, CA', -120.95, 33.72, -118.66, 34.62)
     SantaBarbara.set_fname('data/SB-6km-2017-10-01-T16-00-00Z.nc4', 6)
 
+    # initialize Maui region
+    Maui = Region('Maui, HI', -158.64, 20.35, -155.60, 21.89)
+    Maui.set_fname('data/Maui-6km-2017-11-01-T16-00-00Z.nc4', 1)
+
     # initialize Hawaii region
-    Hawaii = Region('Hawaiian Islands, HI', -158.64, 20.35, -155.60, 21.89)
-    Hawaii.set_fname('data/HI-6km-2017-11-01-T16-00-00Z.nc4', 1)
+    Hawaii = Region('Hawaii, HI', -156.44, 19.63, -155.64, 20.38)
+    Hawaii.set_fname('data/HI-4km-2018-02-02-T20-00-00Z.nc4', 4)
 
     # initialize Glider Model object
-    Glider = SlocumGlider(SantaBarbara)
+    Glider = SlocumGlider(Hawaii)
 
     # retrieve ocean current data
     Glider.get_ocean_data(Glider.region.fname)
