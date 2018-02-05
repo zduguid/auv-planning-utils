@@ -105,7 +105,7 @@
 	; (return opt-objective)
 
 	;; return the glider velocity, [m/s]
-	; (return '(opt-v-x opt-v-y))
+	; (return (list opt-v-x opt-v-y))
 	)
 )
 
@@ -182,6 +182,12 @@
 
 	(format t "~%~%>> favorable currents, sensors on: ~%")
 	(energy-exp 0 0 1 1 0.3 0.3 t)
+
+	(format t "~%~%>> strongly favorable currents, sensors off: ~%")
+	(energy-exp 0 0 1 1 1.1 1.1 nil)
+
+	(format t "~%~%>> strongly favorable currents, sensors on: ~%")
+	(energy-exp 0 0 1 1 1.1 1.1 t)
 
 	(format t "~%~%>> unaligned favorable currents, sensors off: ~%")
 	(energy-exp 0 0 1 1 0.4 0.2 nil)
