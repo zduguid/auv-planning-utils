@@ -4,7 +4,7 @@
 
 
 # Slocum Glider Path Planner
-The Slocum Glider is an autonomous underwater vehicle (AUV) that is specialized for long range research scenarios. To optimize the performance of the Slocum Glider, it is necessary to consider energy-optimal routes. By following energy optimal routes, the achievable range of the glider is increased, and thus there is the potential to reap greater science reward for the mission. To generate energy optimal routes, an Markov Decision Process (MDP) framework is used which takes advantage of dynamic programming methods and Monte Carlo Tree Search (MCTS).
+The Slocum Glider is an autonomous underwater vehicle (AUV) that is specialized for long range research scenarios. To optimize the performance of the Slocum Glider and reap greater science reward for a given mission, it is necessary to consider energy-optimal routes. To compute these energy optimal routes, an Markov Decision Process (MDP) framework is used which takes advantage of dynamic programming methods and Monte Carlo Tree Search (MCTS) and information regarding the ocean currents. In this repository, a script for accessing and visualizing ocean currents is presented and a function that computes the optimal energy expenditure for a given transition of the MDP is discussed. Also, a method for decomposing irregular polygons into smaller convex pieces, known as Approximate Convex Decomposition (ACD), is proposed. 
 
 
 ## Table of Contents
@@ -13,6 +13,7 @@ The Slocum Glider is an autonomous underwater vehicle (AUV) that is specialized 
     - [Ocean Current Data](#ocean-current-data) 
 - [Ocean Currents](#ocean-currents)
 - [Optimal Energy](#optimal-energy)
+- [ACD](#acd)
 - [Acknowledgements](#acknowledgements)
 
 
@@ -47,6 +48,14 @@ The ```ocean_currents.py``` script reads in a ```netCDF4``` file, stores the oce
 The ```optimal_energy.lisp``` script computes the energy optimal transition between two waypoints given the start and end waypoint locations, the ocean current conditions, and the hotel load information. The script is capable of returning either the optimal energy loss needed to make the transition or the glider velocity in cartesian coordinates. This script includes several useful unit tests that showcase how the optimal glider velocity changes as a result of different hotel load scenarios and ocean current conditions.
 
 
+## ACD
+The ```ACD.py``` script takes in an input polygon and tolerance parameter tau, and returns a list of polygons that satisfy the decomposition condition of the ACD algorithm. More information regarding the ACD algorithm can be found [here](http://masc.cs.gmu.edu/wiki/ACD). 
+
+An example output for the ACD algorithm is shown below for varying values of the tolerance parameter tau when the algorithm is applied to a small irregular polygon. In this example, the blue area represents the resulting polygons that are returned from the ACD algorithm after the input polygon has been decomposed, and the red area represents the non-convex areas found in the resulting obstacle representation. Thus, more red area represents more inefficiencies and lost space in regards to viable sample locations. When tau is equal to 10, the tolerance is too high and no decomposition occurs. When tau is lowered, further decomposition takes place until eventually the output entirely consists of convex pieces. In general, setting tau to 0 (no tolerance at all) will yield the complete convex decomposition of the input. However, this may not necessarily be desired because small surface textures may lead to an excessively high number of polygons in the final output.
+
+<img src="images/decomposition_example.jpg" alt="decomposition_example" align="center" width="800">
+
+
 ## Author
 * **[Zach Duguid](https://github.com/zduguid)**
 
@@ -55,5 +64,4 @@ The ```optimal_energy.lisp``` script computes the energy optimal transition betw
 * Computer Science and Artificial Intelligence Laboratory (CSAIL), MIT
 * Deep Submergence Laboratory, WHOI
 * National Science Foundation (NSF)
-* Research Supervisor: Brian Williams
-* Research Supervisor: Rich Camilli
+* Research Supervisors: Brian Williams & Rich Camilli
