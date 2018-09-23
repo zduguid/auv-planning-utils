@@ -1,5 +1,5 @@
 <a href="https://github.com/zduguid">
-    <img src="images/glider2.png" alt="glider_image" align="right" height="70">
+    <img src="README/glider2.png" alt="glider_image" align="right" height="70">
 </a>
 
 
@@ -41,7 +41,7 @@ Several options are available for retrieving ocean current methods:
 ## Ocean Currents
 The ```ocean_currents.py``` script reads in a ```netCDF4``` file, stores the ocean current information in a usable format, and produces a map of the result. The figure below shows an example output of this script.
 
-<img src="images/SB_example.png" alt="SB_example" align="center" width="800">
+<img src="README/SB_example.png" alt="SB_example" align="center" width="800">
 
 
 ## Optimal Energy
@@ -53,11 +53,11 @@ The ```ACD.py``` script takes in an input polygon and tolerance parameter tau, a
 
 An example output for the ACD algorithm is shown below for varying values of the tolerance parameter tau when the algorithm is applied to a small irregular polygon. In this example, the blue area represents the resulting polygons that are returned from the ACD algorithm after the input polygon has been decomposed, and the red area represents the non-convex areas found in the resulting obstacle representation. Thus, more red area represents more inefficiencies and lost space in regards to viable sample locations. When tau is equal to 10, the tolerance is too high and no decomposition occurs. When tau is lowered, further decomposition takes place until eventually the output entirely consists of convex pieces. In general, setting tau to 0 (no tolerance at all) will yield the complete convex decomposition of the input. However, this may not necessarily be desired because small surface textures may lead to an excessively high number of polygons in the final output.
 
-<img src="images/decomposition_example.jpg" alt="decomposition_example" align="center" width="800">
+<img src="README/decomposition_example.jpg" alt="decomposition_example" align="center" width="800">
 
 
 ## Author
-* **[Zach Duguid](https://github.com/zduguid)**
+* **[Zach Duguid](https://zduguid.github.io)**
 
 
 ## Acknowledgements
